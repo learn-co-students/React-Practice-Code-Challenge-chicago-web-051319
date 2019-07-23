@@ -1,19 +1,29 @@
-import React, { Fragment } from 'react'
+import React, { Component } from 'react'
 import MoreButton from '../components/MoreButton'
+import Sushi from '../components/Sushi'
 
-const SushiContainer = (props) => {
+class SushiContainer extends Component {
+  state={
+    startNum: 0
+  }
+
+  handleMore = () => {
+    let currentNum = this.state.startNum
+    this.setState({
+      startNum: currentNum + 4
+    })
+  }
+
+
+  render(){
+  const {startNum } = this.state
   return (
-    <Fragment>
       <div className="belt">
-        {
-          /* 
-             Render Sushi components here!
-          */
-        }
-        <MoreButton />
+      {this.props.sushiArr.slice(startNum, startNum +4).map((sushi) => <Sushi key={sushi.id} sushi={sushi} handleMoney={(val) =>this.props.handleMoney(val)} handleCountEaten={(eatenSushi) => this.props.handleCountEaten(eatenSushi)} remainingMoney={this.props.remainingMoney}/>)}
+      <MoreButton handleMore={this.handleMore}/>
       </div>
-    </Fragment>
-  )
+
+  )}
 }
 
 export default SushiContainer
